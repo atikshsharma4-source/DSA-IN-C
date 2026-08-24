@@ -62,6 +62,17 @@ void pop(int q1[],int* front1,int* rear1){
     printf("POP VALUE IS %d",x);
 }
 
+void display(int q1[],int* front1,int* rear1){
+    if(*front1==-1||*rear1<*front1){
+        printf("NO ELEMNET IN STACK");
+        return;
+    }
+    for(int i=*front1;i<=*rear1;i++){
+        printf("%d\n",q1[i]);
+    }
+
+}
+
 int main()
 {
     int q1[MAX];
@@ -76,7 +87,8 @@ int main()
     {
         printf("\n1. PUSH\n");
         printf("2. POP\n");
-        printf("3. EXIT\n");
+        printf("3. Display\n");
+        printf("4. Exit\n");
 
         printf("ENTER CHOICE: ");
         scanf("%d", &ch);
@@ -96,12 +108,15 @@ int main()
         }
         else if (ch == 3)
         {
-            printf("Program exiting!\n");
+            display(q1,&front1,&rear1);
+        }
+        else if(ch==4)
+        {
+            printf("Exiting Program\n");
             break;
         }
-        else
-        {
-            printf("Invalid choice!\n");
+        else{
+            printf("Invalid choice\n");
         }
 
     } while (1);
