@@ -1,0 +1,110 @@
+#include<stdio.h>
+#define MAX 5
+void enque(int q[],int* front,int* rear,int n){
+    if(*rear==MAX-1){
+        printf("QUEUE IS FULL:\n");
+        return;
+    }
+    if(*front==-1){
+        *front=0;
+    }
+    *rear=*rear+1;
+    q[*rear]=n;
+}
+ 
+int dequeu(int q[],int* front, int* rear){
+    int x;
+    if(*front==-1||*rear<*front){
+        printf("QUEUE IS EMPTY\n");
+        return -1;
+    }
+    x=q[*front];
+    *front=*front+1;
+    return x;
+}
+
+void reset(int* front,int* rear){
+    *front=-1;
+    *rear=-1;
+}
+
+void push(int q1[],int q2[],int* front1,int* front2,int* rear1,int* rear2,int n){
+
+    if(*rear1==MAX-1){
+        printf("stack overflow");
+        return;
+    }
+
+    enque(q2,front2,rear2,n);
+    while(*front1!=-1&&*front1<=*rear1){
+        int x=dequeu(q1,front1,rear1);
+        enque(q2,front2,rear2,x);
+    }
+
+    reset(front1,rear1);
+
+    while(*front2!=-1&&*front2<=*rear2){
+        int x=dequeu(q2,front2,rear2);
+        enque(q1,front1,rear1,x);
+    }
+
+    reset(front2,rear2);
+}
+
+void pop(int q1[],int* front1,int* rear1){
+
+    if(*front1==-1||*rear1<*front1){
+        printf("Stack Underflow!");
+        return;
+    }
+    int x=q1[*front1];
+    *front1=*front1+1;
+    printf("POP VALUE IS %d",x);
+}
+
+int main()
+{
+    int q1[MAX];
+    int q2[MAX];
+
+    int front1 = -1, rear1 = -1;
+    int front2 = -1, rear2 = -1;
+
+    int n, ch;
+
+    do
+    {
+        printf("\n1. PUSH\n");
+        printf("2. POP\n");
+        printf("3. EXIT\n");
+
+        printf("ENTER CHOICE: ");
+        scanf("%d", &ch);
+
+        if (ch == 1)
+        {
+            printf("Enter element to be pushed: ");
+            scanf("%d", &n);
+
+            push(q1, q2,&front1,&front2, &rear1, &rear2,n);
+
+            printf("Element pushed successfully!\n");
+        }
+        else if (ch == 2)
+        {
+            pop(q1, &front1, &rear1);
+        }
+        else if (ch == 3)
+        {
+            printf("Program exiting!\n");
+            break;
+        }
+        else
+        {
+            printf("Invalid choice!\n");
+        }
+
+    } while (1);
+
+    return 0;
+}
