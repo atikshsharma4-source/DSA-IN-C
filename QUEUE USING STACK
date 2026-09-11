@@ -1,0 +1,95 @@
+#include<stdio.h>
+#define MAX 5
+void push(int s[],int* top,int n){
+    if(*top==MAX-1){
+        printf("Stack is full\n");
+        return;
+    }
+    *top=*top+1;
+    s[*top]=n;
+}
+int pop(int s[],int* top){
+    if(*top==-1){
+        printf("Stack is empty\n");
+        return -1;
+    }
+        int x=s[*top];
+        *top=*top-1;
+        return x;   
+}
+
+void reset(int *top){
+    *top=-1;
+}
+
+void enqueue(int s1[],int s2[],int* top1,int* top2,int n){
+    if(*top1==MAX-1){
+        printf("Queue overflow\n");
+        return;
+    }
+    while(*top1!=-1){
+        int x=pop(s1,top1);
+        push(s2,top2,x); 
+    }
+    reset(top1);
+    push(s1,top1,n);
+    while(*top2!=-1){
+        int x=pop(s2,top2);
+        push(s1,top1,x); 
+    }
+    reset(top2); 
+}
+
+void dequeue(int s1[],int* top1){
+    if(*top1==-1){
+    printf("Queue Underflow\n");
+    return;}
+    int x=s1[*top1];
+    *top1=*top1-1;
+    printf("DEQUEUE element is %d\n",x);
+    return;
+}
+
+void display(int s1[],int* top1){
+    printf("Queue is given below;\n");
+    for(int i=*top1;i>=0;i--){
+        printf("%d ",s1[i]);
+    }
+    return;
+}
+
+int main(){
+    int s1[MAX];
+    int s2[MAX];
+    int top1=-1,top2=-1;
+    int ch,n;
+    do{
+    printf("1.Enqueue\n");
+    printf("2.Dequeue\n");
+    printf("3.Display\n");
+    printf("4.Exit\n");
+    printf("Enter choice:\n");
+    scanf("%d",&ch);
+    if(ch==1){
+
+        printf("enter element to be stored:\n");
+        scanf("%d",&n);
+        enqueue(s1,s2,&top1,&top2,n);
+        printf("Element inserted!\n");
+    }
+    else if(ch==2){
+        dequeue(s1,&top1);   
+    }
+    else if(ch==3){
+        display(s1,&top1);
+    }
+    else if(ch==4){
+        break;
+    }
+    else{
+        printf("invalid choice\n");
+    }
+    }while(1);
+    
+    return 0; 
+}
